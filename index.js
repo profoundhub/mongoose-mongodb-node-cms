@@ -1,3 +1,9 @@
-var mongoose = require('mongoose');
+let mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/mongoose_basics');
+mongoose.connect('mongodb://localhost/mongoose_basics', function (err) {
+
+    if (err) throw err;
+
+    console.log('Successfully connected');
+
+});
