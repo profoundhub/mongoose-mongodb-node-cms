@@ -8,48 +8,32 @@ mongoose.connect('mongodb://localhost/mongoose_basics', function (err) {
     
     console.log('Successfully Connected');
 
-    let jamieAuthor = new Author({
-        _id: new mongoose.Types.ObjectId(),
-        name: {
-            firstName: 'Jamie',
-            lastName: 'Munro'
-        },
-        biography: 'Jamie is the author of ASP.NET MVC 5 with Bootstrap and Knockout.js.',
-        twitter: 'https://twitter.com/endyourif',
-        facebook: 'https://www.facebook.com/End-Your-If-194251957252562/'
-    });
-
-    jamieAuthor.save(function(err) {
+    Book.find({
+        title: /mvc/i
+    }).sort('-created')
+    .limit(5)
+    .exec(function(err, books) {
         if (err) throw err;
          
-        console.log('Author successfully saved.');
+        console.log(books);
+    });
+     
+    Author.findById('59b31406beefa1082819e72f', function(err, author) {
+        if (err) throw err;
          
-        var mvcBook = new Book({
-            _id: new mongoose.Types.ObjectId(),
-            title: 'ASP.NET MVC 5 with Bootstrap and Knockout.js',
-            author: jamieAuthor._id,
-            ratings:[{
-                summary: 'Great read'
-            }]
-        });
+        author.linkedin = 'https://www.linkedin.com/in/jamie-munro-8064ba1a/';
          
-        mvcBook.save(function(err) {
+        author.save(function(err) {
             if (err) throw err;
-         
-            console.log('Book successfully saved.');
-        });
-         
-        var knockoutBook = new Book({
-            _id: new mongoose.Types.ObjectId(),
-            title: 'Knockout.js: Building Dynamic Client-Side Web Applications',
-            author: jamieAuthor._id
-        });
-         
-        knockoutBook.save(function(err) {
-            if (err) throw err;
-         
-            console.log('Book successfully saved.');
+             
+            console.log('Author updated successfully');
         });
     });
-    
+     
+    Author.findByIdAndUpdate('59b31406beefa1082819e72f', { linkedin: 'https://www.linkedin.com/in/jamie-munro-8064ba1a/' }, function(err, author) {
+        if (err) throw err;
+         
+        console.log(author);
+    });
+
 });
