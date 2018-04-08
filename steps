@@ -3,3 +3,16 @@ npm init
 npm install mongoose --save
 
 + index.js
+
+...
+
+
+node index.js
+
+OR
+
+NPM Start
+
+OR 
+
+npm start
